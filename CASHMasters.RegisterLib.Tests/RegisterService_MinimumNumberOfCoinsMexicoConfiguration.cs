@@ -1,3 +1,9 @@
+﻿
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace CASHMasters.RegisterLib.Tests;
+
 using System;
 using System.Collections.Generic;
 using CASHMasters.RegisterLib.Interfaces;
@@ -6,11 +12,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-
-namespace CASHMasters.RegisterLib.Tests;
-
-[TestClass]
-public class RegisterService_MinimumNumberOfCoinsUSAConfiguration
+    
+[TestClass]    
+public class RegisterService_MinimumNumberOfCoinsMexicoConfiguration
 {
     private IOptions<CashRegisterOptions> _registerSettings;
     private Mock<ILogger<ICashRegisterService>> _loggerMock;
@@ -24,7 +28,7 @@ public class RegisterService_MinimumNumberOfCoinsUSAConfiguration
 
         var mockDenomOptions = new DenominationOptions
         {
-            CurrentDenomination = "USA",
+            CurrentDenomination = "Mexico",
             ConfiguredDenominations = new Dictionary<string, decimal[]>()
         };
         mockDenomOptions.ConfiguredDenominations.Add("USA",
@@ -86,7 +90,7 @@ public class RegisterService_MinimumNumberOfCoinsUSAConfiguration
 
         var result = service.GetChangeWithLeastNumberOfCoins(5.03m, new[] { 5.00m, 0.10m}).Result;
 
-        //expecting a .05 and 2 .01 pieces
-        Assert.AreEqual(3, result);
+        //expecting a .05 and There are no .01 pieces
+        Assert.AreEqual(1, result);
     }
 }

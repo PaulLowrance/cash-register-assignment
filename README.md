@@ -19,5 +19,5 @@ To change the denomination in use, simply update the `CurrentDenomination` to us
 
 ## Extension
 
-The service that is doing the work could easily be used in a Webservice or other application by referencing the `CASHMasters.RegisterLib` and configuring the services in application builder.  
+The service that is doing the work could easily be used by a Web API controller or other application by referencing the `CASHMasters.RegisterLib` and configuring the services in application builder. This can be see in the `ConfigureServices` method in the `Program` class.  
 Additional methods can be added to the CashRegisterService by adding the signatures to the `ICashRegisterService` interface, and then implementing them in the class.

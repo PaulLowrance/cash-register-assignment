@@ -78,13 +78,17 @@ public static class Program
         var bills = new List<decimal>();
         foreach (var item in splitString)
         {
+            //catch empty strings
+            if(string.IsNullOrWhiteSpace(item))
+                continue;
+            
             if (decimal.TryParse(item, out var decimalItem))
             {
                 bills.Add(decimalItem);
             }
             else
             {
-                Console.WriteLine($"Provided value {item}, is not a decimal number");
+                Console.WriteLine($"Provided value '{item}', is not a decimal number");
                 denominationArray = Array.Empty<decimal>();
                 return false;
             }
