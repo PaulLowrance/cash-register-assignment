@@ -89,4 +89,17 @@ public class RegisterService_MinimumNumberOfCoinsUSAConfiguration
         //expecting a .05 and 2 .01 pieces
         Assert.AreEqual(3, result);
     }
+    
+    [TestMethod]
+    [ExpectedException(typeof(AggregateException),
+        noExceptionMessage: "An exception is expected due to invalid denominations in payment")]
+    public void UnsupportDenominations()
+    {
+        var service = new CashRegisterService(_loggerMock.Object, _registerSettings);
+
+        var result = service.GetChangeWithLeastNumberOfCoins(5.03m, new[] { 5.00m, 0.3m}).Result;
+
+        //expecting a .05 and 2 .01 pieces
+        Assert.AreEqual(3, result);
+    }
 }

@@ -34,7 +34,19 @@ public class CashRegisterService : ICashRegisterService
             throw new ArgumentException(
                 "Total of provided coins and bills must be greater than or equal to total charges");
 
+        var invalidDenoms = ValidateProvidedDenoms(coins, providedCoins).ToList();
+        if(invalidDenoms.Any())
+        {
+            var invalidDenomString = string.Join(',', invalidDenoms);
+            throw new ArgumentException($"Customer Payment contained invalid denominations: '{invalidDenomString}'");
+        }
+
         return GetNumberOfCoinsForChange(coins, changeDue);
+    }
+
+    private IEnumerable<decimal> ValidateProvidedDenoms(decimal[] configuredDenoms, decimal[] providedCoins)
+    {
+        return providedCoins.Except(configuredDenoms);
     }
 
     private int GetNumberOfCoinsForChange(decimal[] coins, decimal changeDue)

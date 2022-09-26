@@ -24,12 +24,20 @@ public static class Program
             return;
         }
 
-        //process the data
-        var result = await serviceProvider.GetService<ICashRegisterService>()
-            .GetChangeWithLeastNumberOfCoins(validationResult.totalCharges, validationResult.providedCoins);
+        try
+        {
 
-        //print the results
-        Console.WriteLine($"Result: {result}");
+            //process the data
+            var result = await serviceProvider.GetService<ICashRegisterService>()
+                .GetChangeWithLeastNumberOfCoins(validationResult.totalCharges, validationResult.providedCoins);
+
+            //print the results
+            Console.WriteLine($"Result: {result}");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Error Processing: {e.Message}");
+        }
     }
 
     /// <summary>
