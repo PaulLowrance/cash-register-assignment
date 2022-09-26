@@ -1,12 +1,8 @@
+using CASHMasters.RegisterLib.Interfaces;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace CASHMasters.RegisterLib.Services;
-
-public interface ICashRegisterService
-{
-    Task<int> GetChangeWithLeastNumberOfCoins(decimal totalCharges, decimal[] providedCoins);
-}
 
 public class CashRegisterService : ICashRegisterService
 {

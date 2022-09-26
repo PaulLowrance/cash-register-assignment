@@ -1,4 +1,5 @@
 ﻿using CASHMasters.RegisterLib;
+using CASHMasters.RegisterLib.Interfaces;
 using CASHMasters.RegisterLib.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,32 +11,41 @@ public static class Program
 {
     static async Task Main(string[] args)
     {
+        //setting up the services
         var services = new ServiceCollection();
         ConfigureServices(services);
-
         await using var serviceProvider = services.BuildServiceProvider();
 
+        //validate the given input
         var validationResult = ValidateInputs(args);
-
         if (!validationResult.isValid)
         {
             PrintHelpText();
             return;
         }
 
+        //process the data
         var result = await serviceProvider.GetService<ICashRegisterService>()
             .GetChangeWithLeastNumberOfCoins(validationResult.totalCharges, validationResult.providedCoins);
 
+        //print the results
         Console.WriteLine($"Result: {result}");
     }
 
+    /// <summary>
+    /// Validates that the correct arguments were provided in the correct order
+    /// </summary>
+    /// <param name="args">from Command Prompt</param>
+    /// <returns>flag indicating input was valid, and the parsed data for processing</returns>
     static (bool isValid, decimal totalCharges, decimal[] providedCoins) ValidateInputs(string[] args)
     {
+        //print help
         if (args.Any(arg => arg.ToLower().Equals("--help")))
         {
             return (false, decimal.MinValue, Array.Empty<decimal>());
         }
 
+        //todo: Find a cleaner way to handle this ... perhaps https://spectreconsole.net?
         if (args.Contains("--purchase-amount") && args.Contains("--customer-payment"))
         {
             var argList = args.ToList();
@@ -84,6 +94,10 @@ public static class Program
         return true;
     }
 
+    /// <summary>
+    /// Configure the services to be used and load the configuration file
+    /// </summary>
+    /// <param name="services"></param>
     static void ConfigureServices(IServiceCollection services)
     {
         services.AddLogging(bldr =>

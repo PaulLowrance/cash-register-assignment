@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using CASHMasters.RegisterLib.Interfaces;
 using CASHMasters.RegisterLib.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
