@@ -16,7 +16,7 @@ In the `DenominationOptions` property there are the following settings:
 * `ConfiguredDenominations` - These are the available denominations that can be used. More can be added by editing this file.
 
 To change the denomination in use, simply update the `CurrentDenomination` to use the desired set from the `ConfiguredDenominations` collection.
-~~~~
+
 ## Extension
 
 The service that is doing the work could easily be used in a Webservice or other application by referencing the `CASHMasters.RegisterLib` and configuring the services in application builder.  
